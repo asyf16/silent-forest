@@ -72,7 +72,7 @@ function App() {
     if (quietTime > 800 && !owlInput.value) {
       owlInput.value = true;
     }
-  }, [micDecibels]);
+  }, [micDecibels,]);
 
   return (
     <div className="Wrapper">

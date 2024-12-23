@@ -4,7 +4,7 @@ const Slider = ({ value, onChange }) => {
     const handleChange = (event) => {
       const newValue = event.target.value;
       if (onChange) {
-        onChange(newValue); // Notify parent about the new value
+        onChange(newValue); 
       }
     };
 
@@ -15,11 +15,11 @@ const Slider = ({ value, onChange }) => {
         bottom: "15px",
         left: "50%",
         transform: "translate(-50%, 0)",
-        width: "320px", // Adjust width for label + slider
+        width: "320px", 
         textAlign: "center",
-        display: "flex", // Flexbox for horizontal alignment
-        alignItems: "center", // Vertically center label and slider
-        gap: "10px", // Space between label and slider
+        display: "flex", 
+        alignItems: "center",
+        gap: "10px",
       }}
     >
       <p
@@ -28,8 +28,8 @@ const Slider = ({ value, onChange }) => {
           padding: "0",
           color: "white",
           fontFamily: "Lexend, serif",
-          fontSize: "16px", // Adjust font size for consistency
-          whiteSpace: "nowrap", // Prevent text wrapping
+          fontSize: "16px", 
+          whiteSpace: "nowrap",
         }}
       >
         Sensitivity
@@ -42,11 +42,11 @@ const Slider = ({ value, onChange }) => {
         onChange={handleChange}
         style={{
           width: "100%",
-          WebkitAppearance: "none", // Remove default browser styling
-          appearance: "none", // For cross-browser support
-          height: "8px", // Track height
-          background: "#ccc", // Track color
-          borderRadius: "4px", // Rounded edges for the track
+          WebkitAppearance: "none", 
+          appearance: "none", 
+          height: "8px",
+          background: "#ccc", 
+          borderRadius: "4px",
           outline: "none",
         }}
       />
@@ -88,6 +88,6 @@ const Slider = ({ value, onChange }) => {
 
 export default Slider;
 Slider.propTypes = {
-    value: PropTypes.string.isRequired, // Value comes from parent
-    onChange: PropTypes.func.isRequired, // Callback to notify parent
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
