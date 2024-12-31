@@ -32,7 +32,7 @@ const Slider = ({ value, onChange }) => {
           whiteSpace: "nowrap",
         }}
       >
-        Sensitivity
+        Max Volume
       </p>
       <input
         type="range"
