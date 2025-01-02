@@ -1,11 +1,27 @@
 import "./App.css";
 import AnimationScreen from "./AnimationScreen";
+import useScreenSize from "./ScreenSize";
 
 function App() {
+  const screenSize = useScreenSize();
+  console.log(screenSize);
 
   return (
     <div className="Wrapper">
-      <AnimationScreen />
+      {screenSize.width / screenSize.height < 2 &&
+      screenSize.width / screenSize.height > 1.4 ? (
+        <AnimationScreen />
+      ) : (
+        <p
+          style={{
+            color: "white",
+            fontFamily: "Lexend, serif",
+            fontSize: "14px",
+          }}
+        >
+          Screen size not compatible, please use on desktop
+        </p>
+      )}
     </div>
   );
 }

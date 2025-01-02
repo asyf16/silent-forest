@@ -3,4 +3,9 @@
   width: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(29, 37, 37)
 }

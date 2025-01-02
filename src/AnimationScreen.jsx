@@ -14,7 +14,7 @@ import Slider from "./slider";
 function AnimationScreen() {
   const [micDecibels, setMicDecibels] = useState(0);
   const [quietTime, setQuietTime] = useState(0);
-  const [sliderValue, setSliderValue] = useState(100);
+  const [sliderValue, setSliderValue] = useState(125);
   const { rive, RiveComponent } = useRive({
     src: "/riv/silent_forest.riv",
     stateMachines: "State Machine 1",
