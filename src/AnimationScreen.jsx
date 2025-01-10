@@ -82,6 +82,10 @@ function AnimationScreen() {
       if (owlInput.value == true) {
         owlInput.value = false;
       }
+      if (soundOn) {
+        const sound = new Audio("./shh.mp3");
+        sound.play();
+      }
     } else if (quietTime > 150 && !catInput.value) {
       catInput.value = true;
       rive.setBooleanStateAtPath("Walk", true, "Cat");
