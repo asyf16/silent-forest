@@ -11,7 +11,6 @@ import { useState, useEffect, useRef } from "react";
 import Slider from "./slider";
 import { FaInfo, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
-
 function AnimationScreen() {
   const [micDecibels, setMicDecibels] = useState(0);
   const [quietTime, setQuietTime] = useState(0);
@@ -35,14 +34,6 @@ function AnimationScreen() {
   const quietInput = useStateMachineInput(rive, "State Machine 1", "Quiet");
 
   const bgm = useRef(new Audio("./bgm.mp3"));
-  // const setupBgm = () => {
-  //   bgm.addEventListener("ended", () => {
-  //     bgm.currentTime = 0;
-  //     bgm.play();
-  //   });
-  // };
-  // setupBgm();
-  // bgm.pause();
 
   const handleDecibelUpdate = (value) => {
     setMicDecibels(((value / sliderValue) * 100).toFixed(0));
@@ -116,9 +107,17 @@ function AnimationScreen() {
       <MicrophoneDecibelMeter onDecibelUpdate={handleDecibelUpdate} />
       <Slider value={sliderValue} onChange={handleSliderChange} />
       <div className="buttonDiv">
-        <button>
-          <FaInfo />
-        </button>
+        <div className="tooltip-group">
+          <button className="info-button">
+            <FaInfo />
+          </button>
+          <div className="tooltip">
+            <div className="tooltip-content">
+              <p>Need motivation to stay focused? Keep quiet for long enough, and the animals will keep you company! If you're too loud, you'll scare them away...</p>
+            </div>
+          </div>
+        </div>
+
         <button onClick={handleSoundChange}>
           {soundOn ? <FaVolumeUp /> : <FaVolumeMute />}
         </button>

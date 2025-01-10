@@ -15,15 +15,17 @@ button {
   width: 2.5rem;
   padding: 6px;
   border-radius: 100%;
-  /* border: 2px solid rgb(29, 37, 37); */
-  margin-left: 15px;
+  border: 2px solid rgb(29, 37, 37);
   font-size: large;
+  cursor: pointer;
 }
 
 .buttonDiv{
   position: fixed;
   bottom: 15px;
   right: 2rem;
+  display: flex;
+  gap: 10px;
 }
 
 button:hover {
@@ -31,4 +33,46 @@ button:hover {
 
   background: rgb(29, 37, 37);
   color: white;
+}
+
+.tooltip-group {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  background: rgba(29, 37, 37, 0.85);
+  color: white;
+  font-family: "Lexend";
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  width: 150px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 10;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -11px; 
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(29, 37, 37, 0.95) transparent transparent transparent;
+}
+
+.tooltip-group:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
 }
