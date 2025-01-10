@@ -4,7 +4,6 @@ import useScreenSize from "./ScreenSize";
 
 function App() {
   const screenSize = useScreenSize();
-  console.log(screenSize);
 
   return (
     <div className="Wrapper">

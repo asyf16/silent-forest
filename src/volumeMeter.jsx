@@ -11,27 +11,23 @@ const MicrophoneDecibelMeter = ({ onDecibelUpdate }) => {
 
     const setupMicrophone = async () => {
       try {
-        // Request microphone access
         audioStream = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
         audioContextRef.current = new (window.AudioContext ||
           window.webkitAudioContext)();
 
-        // Create Analyser Node
         analyserRef.current = audioContextRef.current.createAnalyser();
-        analyserRef.current.fftSize = 128; // Lower FFT size for efficiency
+        analyserRef.current.fftSize = 128;
 
         const source =
           audioContextRef.current.createMediaStreamSource(audioStream);
         source.connect(analyserRef.current);
 
-        // Create data array for analysis
         const bufferLength = analyserRef.current.frequencyBinCount;
         dataArrayRef.current = new Uint8Array(bufferLength);
 
-        // Start analyzing at a throttled rate
-        intervalIdRef.current = setInterval(analyzeAudio, 50); // Updates 20 times per second
+        intervalIdRef.current = setInterval(analyzeAudio, 50);
       } catch (error) {
         console.error("Microphone access error:", error);
       }
