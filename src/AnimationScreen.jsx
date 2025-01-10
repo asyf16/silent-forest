@@ -9,6 +9,8 @@ import {
 import MicrophoneDecibelMeter from "./volumeMeter";
 import { useState, useEffect, useRef } from "react";
 import Slider from "./slider";
+import { FaInfo, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+
 
 function AnimationScreen() {
   const [micDecibels, setMicDecibels] = useState(0);
@@ -35,8 +37,8 @@ function AnimationScreen() {
   const bgm = useRef(new Audio("./bgm.mp3"));
   // const setupBgm = () => {
   //   bgm.addEventListener("ended", () => {
-  //     bgm.currentTime = 0; 
-  //     bgm.play(); 
+  //     bgm.currentTime = 0;
+  //     bgm.play();
   //   });
   // };
   // setupBgm();
@@ -51,19 +53,18 @@ function AnimationScreen() {
   };
 
   const handleSoundChange = () => {
-    if (soundOn){
+    if (soundOn) {
       setSoundOn(false);
-      bgm.current.pause()
-    }
-    else{
+      bgm.current.pause();
+    } else {
       setSoundOn(true);
       bgm.current.play();
     }
-  }
+  };
 
   useEffect(() => {
-    console.log ( bgm.current.currentTime)
-    if (bgm.current.currentTime >= 175){
+    console.log(bgm.current.currentTime);
+    if (bgm.current.currentTime >= 175) {
       bgm.current.currentTime = 0;
     }
     if (micDecibels)
@@ -114,7 +115,14 @@ function AnimationScreen() {
       <RiveComponent />
       <MicrophoneDecibelMeter onDecibelUpdate={handleDecibelUpdate} />
       <Slider value={sliderValue} onChange={handleSliderChange} />
-      <button onClick={handleSoundChange}>{soundOn ? "Sound Off" : "Sound On"}</button>
+      <div className="buttonDiv">
+        <button>
+          <FaInfo />
+        </button>
+        <button onClick={handleSoundChange}>
+          {soundOn ? <FaVolumeUp /> : <FaVolumeMute />}
+        </button>
+      </div>
     </div>
   );
 }

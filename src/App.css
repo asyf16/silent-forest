@@ -10,6 +10,25 @@
   background: rgb(29, 37, 37)
 }
 
-.soundbutton{
-  position: absolute;
+button {
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 6px;
+  border-radius: 100%;
+  /* border: 2px solid rgb(29, 37, 37); */
+  margin-left: 15px;
+  font-size: large;
+}
+
+.buttonDiv{
+  position: fixed;
+  bottom: 15px;
+  right: 2rem;
+}
+
+button:hover {
+    border: 0px;
+
+  background: rgb(29, 37, 37);
+  color: white;
 }
