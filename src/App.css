@@ -47,11 +47,11 @@ button:hover {
   transform: translateX(-50%);
   visibility: hidden;
   opacity: 0;
-  background: rgba(29, 37, 37, 0.85);
+  background: rgba(29, 37, 37, 0.9);
   color: white;
   font-family: "Lexend";
   text-align: center;
-  border-radius: 6px;
+  border-radius: 20px;
   padding: 8px;
   width: 150px;
   font-size: 0.9rem;

@@ -78,7 +78,7 @@ function AnimationScreen() {
         const sound = new Audio("./shh.mp3");
         sound.play();
       }
-    } else if (quietTime > 150 && !catInput.value) {
+    } else if (quietTime > 200 && !catInput.value) {
       catInput.value = true;
       rive.setBooleanStateAtPath("Walk", true, "Cat");
       setTimeout(() => rive.setBooleanStateAtPath("Walk", false, "Cat"), 4000);
@@ -86,13 +86,13 @@ function AnimationScreen() {
         const sound = new Audio("./cat.mp3");
         sound.play();
       }
-    } else if (quietTime > 250 && !bearInput.value) {
+    } else if (quietTime > 550 && !bearInput.value) {
       bearInput.value = true;
       if (soundOn) {
         const sound = new Audio("./bear.mp3");
         sound.play();
       }
-    } else if (quietTime > 400 && !owlInput.value) {
+    } else if (quietTime > 1100 && !owlInput.value) {
       owlInput.value = true;
       if (soundOn) {
         const sound = new Audio("./owl.mp3");
@@ -113,7 +113,7 @@ function AnimationScreen() {
           </button>
           <div className="tooltip">
             <div className="tooltip-content">
-              <p>Need motivation to stay focused? Keep quiet for long enough, and the animals will keep you company! If you're too loud, you'll scare them away...</p>
+              <p>Need motivation to stay focused? Keep quiet for long enough, and the animals will keep you company! If you&apos;re too loud, you&apos;ll scare them away...</p>
             </div>
           </div>
         </div>
