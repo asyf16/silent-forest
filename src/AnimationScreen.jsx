@@ -16,6 +16,7 @@ function AnimationScreen() {
   const [quietTime, setQuietTime] = useState(0);
   const [sliderValue, setSliderValue] = useState(125);
   const [soundOn, setSoundOn] = useState(false);
+  let started = useRef(false);
 
   const { rive, RiveComponent } = useRive({
     src: "/riv/silent_forest.riv",
@@ -36,8 +37,10 @@ function AnimationScreen() {
   const bgm = useRef(new Audio("./bgm.mp3"));
 
   const handleDecibelUpdate = (value) => {
-    setMicDecibels(((value / sliderValue) * 100).toFixed(0));
-    setQuietTime((prevQuietTime) => prevQuietTime + 1);
+    if (started.current) {
+      setMicDecibels(((value / sliderValue) * 100).toFixed(0));
+      setQuietTime((prevQuietTime) => prevQuietTime + 1);
+    }
   };
   const handleSliderChange = (value) => {
     setSliderValue(Number(value));
@@ -54,7 +57,13 @@ function AnimationScreen() {
   };
 
   useEffect(() => {
-    console.log(bgm.current.currentTime);
+    if (rive) {
+      rive.on("statechange", (event) => {
+        if (event.data[0] == "MoonRise") {
+          started.current = true;
+        }
+      });
+    }
     if (bgm.current.currentTime >= 175) {
       bgm.current.currentTime = 0;
     }
@@ -99,13 +108,15 @@ function AnimationScreen() {
         sound.play();
       }
     }
-  }, [micDecibels, sliderValue]);
+  }, [micDecibels, sliderValue, rive]);
 
   return (
     <div className="Wrapper">
       <RiveComponent />
       <MicrophoneDecibelMeter onDecibelUpdate={handleDecibelUpdate} />
-      <Slider value={sliderValue} onChange={handleSliderChange} />
+      {started.current ? (
+        <Slider value={sliderValue} onChange={handleSliderChange} />
+      ) : null}
       <div className="buttonDiv">
         <div className="tooltip-group">
           <button className="info-button">
@@ -113,7 +124,11 @@ function AnimationScreen() {
           </button>
           <div className="tooltip">
             <div className="tooltip-content">
-              <p>Need motivation to stay focused? Keep quiet for long enough, and the animals will keep you company! If you&apos;re too loud, you&apos;ll scare them away...</p>
+              <p>
+                Need motivation to stay focused? Keep quiet for long enough, and
+                the animals will keep you company! If you&apos;re too loud,
+                you&apos;ll scare them away...
+              </p>
             </div>
           </div>
         </div>
