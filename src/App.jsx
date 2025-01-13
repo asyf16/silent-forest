@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="Wrapper">
-      {screenSize.width / screenSize.height < 2 &&
+      {screenSize.width / screenSize.height < 2.3 &&
       screenSize.width / screenSize.height > 1.4 ? (
         <AnimationScreen />
       ) : (
