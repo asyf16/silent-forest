@@ -1,10 +1,28 @@
 import "./App.css";
 import AnimationScreen from "./AnimationScreen";
 import useScreenSize from "./ScreenSize";
+import {
+  useRive,
+  Layout,
+  Fit,
+  Alignment,
+  useStateMachineInput,
+} from "@rive-app/react-canvas";
 
 function App() {
   const screenSize = useScreenSize();
   const isWideScreen = screenSize.width / screenSize.height > 1.9;
+
+  const { rive, RiveComponent } = useRive({
+    src: "/riv/cat.riv",
+    stateMachines: "State Machine 1",
+    autoplay: true,
+    artboard: "Main Screen",
+    layout: new Layout({
+      fit: Fit.FitWidth,
+      alignment: Alignment.TopCenter,
+    }),
+  });
 
   return (
     <div className="Wrapper">
@@ -18,6 +36,7 @@ function App() {
         {screenSize.width / screenSize.height > 1.4 ? (
           <AnimationScreen />
         ) : (
+          <div className="uncompatible">
           <p
             style={{
               color: "white",
@@ -27,6 +46,11 @@ function App() {
           >
             Screen size not compatible, please use on desktop
           </p>
+          <div className="uncompatible2">
+          <RiveComponent />
+
+          </div>
+          </div>
         )}
       </div>
     </div>

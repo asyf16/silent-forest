@@ -76,3 +76,20 @@ button:hover {
   opacity: 1;
   transform: translateX(-50%) translateY(-6px);
 }
+
+.uncompatible{
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  overflow-y: hidden;
+  overflow-y: hidden;
+}
+
+.uncompatible2{
+  width: 100vw;
+  height: 60vw;
+  position: absolute;
+  bottom: 0px;
+}
