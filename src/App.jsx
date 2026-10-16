@@ -1,19 +1,19 @@
 import "./App.css";
 import AnimationScreen from "./AnimationScreen";
+import Contact from "./Contact";
 import useScreenSize from "./ScreenSize";
 import {
   useRive,
   Layout,
   Fit,
   Alignment,
-  useStateMachineInput,
 } from "@rive-app/react-canvas";
 
 function App() {
   const screenSize = useScreenSize();
   const isWideScreen = screenSize.width / screenSize.height > 1.9;
 
-  const { rive, RiveComponent } = useRive({
+  const { RiveComponent } = useRive({
     src: "/riv/cat.riv",
     stateMachines: "State Machine 1",
     autoplay: true,
@@ -53,6 +53,7 @@ function App() {
           </div>
         )}
       </div>
+      <Contact />
     </div>
   );
 }

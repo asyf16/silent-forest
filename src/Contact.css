@@ -1,0 +1,155 @@
+.contact-note {
+  position: fixed;
+  bottom: 18px;
+  left: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  border: 1px solid #9dbba447;
+  border-radius: 22px;
+  background: #172b25e8;
+  box-shadow: 0 3px 14px #0002;
+}
+
+.contact-invite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  height: auto;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 22px;
+  background: transparent;
+  color: #e7edd8;
+  font-family: "Lexend", sans-serif;
+  text-align: left;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.contact-invite:hover {
+  border: 1px solid #9dbba47a;
+  background: #274336;
+  color: #f6f2df;
+}
+
+.contact-invite > svg { font-size: 15px; color: #bdcda2; }
+.contact-invite-question { display: block; font-size: 10px; font-weight: 300; }
+.contact-invite-action { display: block; margin-top: 2px; font-size: 12px; }
+.contact-collapse {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  padding: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #bdcda2;
+  font-size: 12px;
+}
+.contact-collapse:hover { border: 1px solid transparent; background: #274336; }
+.contact-note-collapsed { border-radius: 50%; }
+.contact-note-collapsed .contact-invite {
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.contact-dialog {
+  box-sizing: border-box;
+  width: min(340px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 22px;
+  overflow-y: auto;
+  border: 1px solid #bec8a6;
+  border-radius: 28px;
+  background: #f5f2e4;
+  color: #344d3d;
+  font-family: "Lexend", sans-serif;
+  text-align: center;
+  box-shadow: 0 20px 80px #0005;
+}
+
+.contact-dialog::backdrop { background: #06150f99; backdrop-filter: blur(5px); }
+.contact-dialog:hover { background-color: #f8f5e9; }
+.contact-dialog,
+.contact-collapse,
+.contact-close,
+.contact-send {
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.contact-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #687c65;
+  font-size: 15px;
+}
+.contact-close:hover { border: 1px solid transparent; background: #e3e8d6; color: #344d3d; }
+.contact-leaf { color: #829767; font-size: 20px; }
+.contact-dialog h2 { margin: 8px 0; font-size: 20px; font-weight: 500; letter-spacing: -0.7px; }
+.contact-dialog p { margin: 0 0 16px; color: #71806b; font-size: 12px; line-height: 1.7; }
+.contact-dialog form { text-align: left; }
+.contact-dialog label { display: block; margin: 12px 0 6px; font-size: 12px; }
+.contact-dialog label span { color: #71806b; font-size: 10px; }
+.contact-dialog input,
+.contact-dialog textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cdd4bc;
+  border-radius: 13px;
+  background: #fffdf5;
+  color: #344d3d;
+  font: 12px/1.6 "Lexend", sans-serif;
+}
+.contact-dialog textarea { resize: vertical; min-height: 100px; }
+.contact-dialog input::placeholder,
+.contact-dialog textarea::placeholder { color: #8a9380; }
+.contact-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: auto;
+  margin-top: 14px;
+  padding: 10px;
+  border: 1px solid #344d3d;
+  border-radius: 18px;
+  background: #344d3d;
+  color: #f5f2e4;
+  font: 12px "Lexend", sans-serif;
+}
+.contact-send:hover { border: 1px solid #45634d; background: #45634d; }
+.contact-send:disabled { opacity: 0.65; cursor: wait; }
+.contact-dialog .contact-hint { margin: 12px 0 0; font-size: 10px; text-align: center; }
+.contact-invite:focus-visible,
+.contact-collapse:focus-visible,
+.contact-dialog :focus-visible { outline: 3px solid #95ac70; outline-offset: 3px; }
+
+@media (max-width: 1000px) {
+  .contact-note { bottom: 72px; left: 16px; }
+}
+@media (max-width: 600px) {
+  .contact-note { bottom: 18px; }
+  .contact-dialog { padding: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-invite,
+  .contact-dialog,
+  .contact-collapse,
+  .contact-close,
+  .contact-send { transition: none; }
+}
