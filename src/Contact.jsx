@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaLeaf, FaTimes } from "react-icons/fa";
 import "./Contact.css";
 
-const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+const formspreeEndpoint = "https://formspree.io/f/xbgdqpaq";
 
 function Contact() {
   const dialogRef = useRef(null);
@@ -18,10 +18,6 @@ function Contact() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (status === "sending") return;
-    if (!formspreeEndpoint) {
-      setStatus("error");
-      return;
-    }
     const form = event.currentTarget;
     const data = new FormData(form);
     const message = data.get("message").trim();

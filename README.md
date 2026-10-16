@@ -4,6 +4,10 @@
 
 Demo: https://silentforest.tech/
 
+## Contact form configuration
+
+The contact form posts directly to the public Formspree submission URL configured in `src/Contact.jsx`. No environment variables are required. For Cloudflare, use `npm run build` and deploy the `dist` directory.
+
 ## 🌟 Overview
 Silent Forest is an innovative noise management application designed to bring a visual, interactive approach to controlling noise levels in classroom environments. The app features animated characters that react in real-time to the ambient noise levels, providing immediate visual feedback to encourage a quieter, more productive classroom atmosphere.
 
