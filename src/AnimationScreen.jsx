@@ -17,7 +17,6 @@ function AnimationScreen() {
   const [quietTime, setQuietTime] = useState(0);
   const [sliderValue, setSliderValue] = useState(125);
   const [soundOn, setSoundOn] = useState(false);
-  const [volume, setVolume] = useState(0.5);
   const effectAudio = useRef(null);
   let started = useRef(false);
 
@@ -39,17 +38,16 @@ function AnimationScreen() {
 
   useEffect(() => {
     if (effectAudio.current) {
-      effectAudio.current.volume = volume;
       if (!soundOn) effectAudio.current.pause();
     }
-  }, [soundOn, volume]);
+  }, [soundOn]);
 
   useEffect(() => () => effectAudio.current?.pause(), []);
 
   const playEffect = (source) => {
     effectAudio.current?.pause();
     const sound = new Audio(source);
-    sound.volume = volume;
+    sound.volume = 0.5;
     effectAudio.current = sound;
     sound.play().catch(() => {});
   };
@@ -134,7 +132,7 @@ function AnimationScreen() {
           </div>
         </div>
 
-        <VolumeMenu soundOn={soundOn} onSoundChange={setSoundOn} volume={volume} onVolumeChange={setVolume} />
+        <VolumeMenu soundOn={soundOn} onSoundChange={setSoundOn} />
       </div>
     </div>
   );
