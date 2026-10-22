@@ -126,7 +126,7 @@ function Contact() {
           </button>
           <p className="contact-hint" role="status">
             {status === "success" ? "Thank you! I'll get back to you soon!" :
-              status === "error" ? "Your note couldn’t be sent. Please try again." : "A little note, from the Silent Forest to my inbox."}
+              status === "error" ? "Your note couldn’t be sent. Please try again." : ""}
           </p>
         </form>
       </dialog>

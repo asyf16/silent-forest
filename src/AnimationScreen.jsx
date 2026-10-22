@@ -9,13 +9,16 @@ import {
 import MicrophoneDecibelMeter from "./volumeMeter";
 import { useState, useEffect, useRef } from "react";
 import Slider from "./slider";
-import { FaInfo, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import { FaInfo } from "react-icons/fa";
+import VolumeMenu from "./VolumeMenu";
 
 function AnimationScreen() {
   const [micDecibels, setMicDecibels] = useState(0);
   const [quietTime, setQuietTime] = useState(0);
   const [sliderValue, setSliderValue] = useState(125);
   const [soundOn, setSoundOn] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const effectAudio = useRef(null);
   let started = useRef(false);
 
   const { rive, RiveComponent } = useRive({
@@ -34,7 +37,22 @@ function AnimationScreen() {
   const volumeInput = useStateMachineInput(rive, "State Machine 1", "volume");
   const quietInput = useStateMachineInput(rive, "State Machine 1", "Quiet");
 
-  const bgm = useRef(new Audio("./bgm.mp3"));
+  useEffect(() => {
+    if (effectAudio.current) {
+      effectAudio.current.volume = volume;
+      if (!soundOn) effectAudio.current.pause();
+    }
+  }, [soundOn, volume]);
+
+  useEffect(() => () => effectAudio.current?.pause(), []);
+
+  const playEffect = (source) => {
+    effectAudio.current?.pause();
+    const sound = new Audio(source);
+    sound.volume = volume;
+    effectAudio.current = sound;
+    sound.play().catch(() => {});
+  };
 
   const handleDecibelUpdate = (value) => {
     if (started.current) {
@@ -46,16 +64,6 @@ function AnimationScreen() {
     setSliderValue(Number(value));
   };
 
-  const handleSoundChange = () => {
-    if (soundOn) {
-      setSoundOn(false);
-      bgm.current.pause();
-    } else {
-      setSoundOn(true);
-      bgm.current.play();
-    }
-  };
-
   useEffect(() => {
     if (rive) {
       rive.on("statechange", (event) => {
@@ -63,9 +71,6 @@ function AnimationScreen() {
           started.current = true;
         }
       });
-    }
-    if (bgm.current.currentTime >= 175) {
-      bgm.current.currentTime = 0;
     }
     if (micDecibels)
       volumeInput.value = ((micDecibels / sliderValue) * 100).toFixed(0);
@@ -84,28 +89,24 @@ function AnimationScreen() {
         owlInput.value = false;
       }
       if (soundOn) {
-        const sound = new Audio("./shh.mp3");
-        sound.play();
+        playEffect("./shh.mp3");
       }
     } else if (quietTime > 200 && !catInput.value) {
       catInput.value = true;
       rive.setBooleanStateAtPath("Walk", true, "Cat");
       setTimeout(() => rive.setBooleanStateAtPath("Walk", false, "Cat"), 4000);
       if (soundOn) {
-        const sound = new Audio("./cat.mp3");
-        sound.play();
+        playEffect("./cat.mp3");
       }
     } else if (quietTime > 550 && !bearInput.value) {
       bearInput.value = true;
       if (soundOn) {
-        const sound = new Audio("./bear.mp3");
-        sound.play();
+        playEffect("./bear.mp3");
       }
     } else if (quietTime > 1100 && !owlInput.value) {
       owlInput.value = true;
       if (soundOn) {
-        const sound = new Audio("./owl.mp3");
-        sound.play();
+        playEffect("./owl.mp3");
       }
     }
   }, [micDecibels, sliderValue, rive]);
@@ -133,9 +134,7 @@ function AnimationScreen() {
           </div>
         </div>
 
-        <button onClick={handleSoundChange}>
-          {soundOn ? <FaVolumeUp /> : <FaVolumeMute />}
-        </button>
+        <VolumeMenu soundOn={soundOn} onSoundChange={setSoundOn} volume={volume} onVolumeChange={setVolume} />
       </div>
     </div>
   );

@@ -1,0 +1,83 @@
+.volume-trigger {
+  display: grid;
+  place-items: center;
+  border: 1px solid #9dbba47a;
+  background: #172b25e8;
+  color: #e7edd8;
+}
+.volume-trigger:hover { border: 1px solid #9dbba47a; background: #274336; }
+
+.volume-popup {
+  box-sizing: border-box;
+  position: fixed;
+  inset: auto 2rem 66px auto;
+  width: min(270px, calc(100vw - 32px));
+  max-height: calc(100dvh - 86px);
+  margin: 0;
+  padding: 20px;
+  overflow-y: auto;
+  border: 1px solid #bec8a6;
+  border-radius: 24px;
+  background: #f5f2e4;
+  color: #344d3d;
+  font-family: "Lexend", sans-serif;
+  box-shadow: 0 10px 36px #0003;
+}
+.volume-close {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #687c65;
+  font-size: 12px;
+}
+.volume-close:hover { border: 1px solid transparent; background: #e3e8d6; color: #344d3d; }
+.volume-heading { display: flex; align-items: center; gap: 9px; padding-right: 15px; }
+.volume-heading > svg { color: #829767; font-size: 17px; }
+.volume-heading h2 { margin: 0; font-size: 16px; font-weight: 500; letter-spacing: -0.5px; }
+.volume-controls { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+.volume-mute {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  width: 86px;
+  height: 34px;
+  padding: 8px;
+  border: 1px solid #cdd4bc;
+  border-radius: 12px;
+  background: #e3e8d6;
+  color: #344d3d;
+  font: 11px "Lexend", sans-serif;
+}
+.volume-mute:hover { border: 1px solid #a8b58e; background: #d7dfc6; color: #344d3d; }
+.volume-controls > input { flex: 1; width: 0; min-width: 0; margin: 0; accent-color: #687e52; cursor: pointer; }
+.volume-songs { display: grid; gap: 6px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.volume-songs legend { margin-bottom: 9px; padding: 0; color: #71806b; font-size: 10px; }
+.volume-song {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid #cdd4bc;
+  border-radius: 12px;
+  background: #fffdf5;
+  font-size: 12px;
+  cursor: pointer;
+}
+.volume-song:hover { background: #edf0e1; }
+.volume-song:has(input:checked) { border-color: #95a97c; background: #e3e8d6; }
+.volume-song input { margin: 0; accent-color: #687e52; }
+.volume-song > svg { margin-left: auto; color: #687e52; font-size: 10px; visibility: hidden; }
+.volume-song:has(input:checked) > svg { visibility: visible; }
+.volume-hint { margin: 12px 0 0; color: #71806b; font-size: 10px; line-height: 1.6; }
+.volume-trigger:focus-visible,
+.volume-popup :focus-visible { outline: 3px solid #95ac70; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .volume-popup { right: 16px; }
+}
