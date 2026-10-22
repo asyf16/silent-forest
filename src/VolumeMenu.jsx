@@ -7,21 +7,23 @@ const songs = [
   { name: "Forest Lo-Fi", src: "/music/bgm.mp3" },
   { name: "Jazzy Leaves", src: "/music/bgm2.mp3" },
   { name: "Soft Piano", src: "/music/bgm3.mp3" },
+  { name: "24/7 lofi cafe", embed: "https://loficafe.net/embed/studying" },
 ];
 
 function VolumeMenu({ soundOn, onSoundChange }) {
   const audioRef = useRef(null);
   const [selectedSong, setSelectedSong] = useState(0);
+  const selectedTrack = songs[selectedSong];
 
   useEffect(() => {
-    if (!soundOn) return;
+    if (!soundOn || selectedTrack.embed) return;
     const audio = audioRef.current;
     // Empty song slots stay silent until their files are added.
     audio.play().catch(() => {});
     return () => {
       audio.pause();
     };
-  }, [soundOn, selectedSong]);
+  }, [soundOn, selectedTrack]);
 
   useEffect(() => {
     audioRef.current.volume = 0.5;
@@ -29,7 +31,7 @@ function VolumeMenu({ soundOn, onSoundChange }) {
 
   return (
     <div className="volume-menu">
-      <audio ref={audioRef} src={songs[selectedSong].src} loop preload="none" />
+      <audio ref={audioRef} src={selectedTrack.src} loop preload="none" />
       <button
         type="button"
         className="volume-trigger"
@@ -59,13 +61,26 @@ function VolumeMenu({ soundOn, onSoundChange }) {
         </div>
         <fieldset className="volume-songs" aria-label="Background song">
           {songs.map((song, index) => (
-            <label className="volume-song" key={song.src}>
+            <label className="volume-song" key={song.src || song.embed}>
               <input type="radio" name="forest-song" value={index} checked={selectedSong === index} onChange={() => setSelectedSong(index)} />
               <span>{song.name}</span>
               <FaCheck aria-hidden="true" />
             </label>
           ))}
         </fieldset>
+        {selectedTrack.embed && (
+          soundOn ? (
+            <iframe
+              className="volume-radio"
+              title="24/7 Lofi Cafe radio player"
+              src={selectedTrack.embed}
+              height="80"
+              allow="autoplay"
+            />
+          ) : (
+            <p className="volume-radio-hint">Unmute to load the radio, then press play.</p>
+          )
+        )}
       </section>
     </div>
   );

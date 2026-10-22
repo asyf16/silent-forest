@@ -118,10 +118,10 @@ function AnimationScreen() {
       ) : null}
       <div className="buttonDiv">
         <div className="tooltip-group">
-          <button className="info-button">
-            <FaInfo />
+          <button type="button" className="info-button" aria-label="About Silent Forest" aria-describedby="forest-info">
+            <FaInfo aria-hidden="true" />
           </button>
-          <div className="tooltip">
+          <div id="forest-info" className="tooltip" role="tooltip">
             <div className="tooltip-content">
               <p>
                 Need motivation to stay focused? Keep quiet for long enough, and
