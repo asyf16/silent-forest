@@ -14,6 +14,7 @@ import {
 function App() {
   const { index, markSeen } = useIndex();
   const screenSize = useScreenSize();
+  const isCompatible = screenSize.width / screenSize.height > 1.4;
   const isWideScreen = screenSize.width / screenSize.height > 1.9;
 
   const { RiveComponent } = useRive({
@@ -36,10 +37,11 @@ function App() {
           width: isWideScreen ? `${screenSize.height * 1.8}px` : "100%",
         }}
       >
-        {screenSize.width / screenSize.height > 1.4 ? (
+        {isCompatible ? (
           <AnimationScreen markSeen={markSeen} />
         ) : (
           <div className="uncompatible">
+          <div className="incompatible-message">
           <p
             style={{
               color: "white",
@@ -49,6 +51,8 @@ function App() {
           >
             Screen size not compatible, please use on desktop
           </p>
+          <Contact />
+          </div>
           <div className="uncompatible2">
           <RiveComponent />
 
@@ -56,8 +60,8 @@ function App() {
           </div>
         )}
       </div>
-      <Contact />
-      <AnimalIndex index={index} />
+      {isCompatible && <Contact />}
+      {isCompatible && <AnimalIndex index={index} />}
     </div>
   );
 }
