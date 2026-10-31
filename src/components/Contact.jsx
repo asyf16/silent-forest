@@ -120,10 +120,15 @@ function Contact() {
             placeholder="Hello from my corner of the woods…"
             onInput={(event) => event.currentTarget.setCustomValidity("")}
           />
-          <button type="submit" className="contact-send" disabled={status === "sending"}>
-            <FaEnvelope aria-hidden="true" />
-            {status === "success" ? "Your note is sent!" : status === "sending" ? "Sending your little note…" : "Let’s send a little mail"}
-          </button>
+          <div className="contact-actions">
+            <button type="submit" className="contact-send" disabled={status === "sending"}>
+              <FaEnvelope aria-hidden="true" />
+              {status === "success" ? "Sent!" : status === "sending" ? "Sending…" : "Send note"}
+            </button>
+            <a className="contact-support" href="https://buymeacoffee.com/aurorashi1a" target="_blank" rel="noopener noreferrer">
+              Help keep the forest online
+            </a>
+          </div>
           <p className="contact-hint" role="status">
             {status === "success" ? "Thank you! I'll get back to you soon!" :
               status === "error" ? "Your note couldn’t be sent. Please try again." : ""}
