@@ -29,8 +29,6 @@ button {
 }
 
 button:hover {
-    border: 0px;
-
   background: rgb(29, 37, 37);
   color: white;
 }
@@ -88,4 +86,39 @@ button:hover {
   height: 60vw;
   position: absolute;
   bottom: 0px;
+}
+
+/* A shared, quiet woodland palette for the controls. */
+.Wrapper { height: 100dvh; }
+button { transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
+.buttonDiv { right: 22px; bottom: 20px; z-index: 11; align-items: center; }
+.tooltip-group:focus-within .tooltip,
+.tooltip-group:hover .tooltip { visibility: visible; opacity: 1; }
+.tooltip { right: 0; }
+.sensitivity-control {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(380px, calc(100vw - 32px));
+  padding: 12px 16px;
+  border: 1px solid #9dbba447;
+  border-radius: 24px;
+  background: #172b25e8;
+  box-shadow: 0 3px 14px #0002;
+}
+.sensitivity-control label { color: #e7edd8; font-size: 11px; white-space: nowrap; }
+.sensitivity-value { min-width: 48px; color: #bdd099; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.sensitivity-control input { width: 100%; min-width: 0; height: 6px; accent-color: #bdd099; cursor: pointer; }
+.sensitivity-control input:focus-visible { outline-offset: 6px; }
+.uncompatible > p { z-index: 1; margin: 24px; line-height: 1.8; }
+@media (max-width: 1000px) {
+  .sensitivity-control { bottom: 78px; }
+}
+@media (max-width: 600px) {
+  .buttonDiv { right: 14px; }
+  .contact-note:not(.contact-note-collapsed) { bottom: 82px; }
 }

@@ -1,4 +1,4 @@
-import "./App.css";
+import "../App.css";
 import {
   useRive,
   Layout,
@@ -11,8 +11,9 @@ import { useState, useEffect, useRef } from "react";
 import Slider from "./slider";
 import { FaInfo } from "react-icons/fa";
 import VolumeMenu from "./VolumeMenu";
+import PropTypes from "prop-types";
 
-function AnimationScreen() {
+function AnimationScreen({ markSeen }) {
   const [micDecibels, setMicDecibels] = useState(0);
   const [quietTime, setQuietTime] = useState(0);
   const [sliderValue, setSliderValue] = useState(125);
@@ -89,25 +90,28 @@ function AnimationScreen() {
       if (soundOn) {
         playEffect("./shh.mp3");
       }
-    } else if (quietTime > 200 && !catInput.value) {
+    } else if (quietTime > 250 && !catInput.value) {
       catInput.value = true;
+      markSeen("littleKitty");
       rive.setBooleanStateAtPath("Walk", true, "Cat");
       setTimeout(() => rive.setBooleanStateAtPath("Walk", false, "Cat"), 4000);
       if (soundOn) {
         playEffect("./cat.mp3");
       }
-    } else if (quietTime > 550 && !bearInput.value) {
+    } else if (quietTime > 800 && !bearInput.value) {
       bearInput.value = true;
+      markSeen("misterBear");
       if (soundOn) {
         playEffect("./bear.mp3");
       }
-    } else if (quietTime > 1100 && !owlInput.value) {
+    } else if (quietTime > 2000 && !owlInput.value) {
       owlInput.value = true;
+      markSeen("madameOwl");
       if (soundOn) {
         playEffect("./owl.mp3");
       }
     }
-  }, [micDecibels, sliderValue, rive]);
+  }, [micDecibels, sliderValue, rive, markSeen]);
 
   return (
     <div className="Wrapper">
@@ -137,5 +141,7 @@ function AnimationScreen() {
     </div>
   );
 }
+
+AnimationScreen.propTypes = { markSeen: PropTypes.func.isRequired };
 
 export default AnimationScreen;

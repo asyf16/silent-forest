@@ -1,7 +1,9 @@
 import "./App.css";
-import AnimationScreen from "./AnimationScreen";
-import Contact from "./Contact";
-import useScreenSize from "./ScreenSize";
+import useIndex from "./hooks/useIndex";
+import AnimationScreen from "./components/AnimationScreen";
+import Contact from "./components/Contact";
+import AnimalIndex from "./components/AnimalIndex";
+import useScreenSize from "./components/ScreenSize";
 import {
   useRive,
   Layout,
@@ -10,6 +12,7 @@ import {
 } from "@rive-app/react-canvas";
 
 function App() {
+  const { index, markSeen } = useIndex();
   const screenSize = useScreenSize();
   const isWideScreen = screenSize.width / screenSize.height > 1.9;
 
@@ -34,7 +37,7 @@ function App() {
         }}
       >
         {screenSize.width / screenSize.height > 1.4 ? (
-          <AnimationScreen />
+          <AnimationScreen markSeen={markSeen} />
         ) : (
           <div className="uncompatible">
           <p
@@ -54,6 +57,7 @@ function App() {
         )}
       </div>
       <Contact />
+      <AnimalIndex index={index} />
     </div>
   );
 }

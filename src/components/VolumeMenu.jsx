@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaCheck, FaLeaf, FaTimes, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-import "./VolumeMenu.css";
+import "../styling/VolumeMenu.css";
 
 // Replace these files (or paths) when the three songs are ready.
 const songs = [

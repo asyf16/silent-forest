@@ -88,3 +88,5 @@
 @media (max-width: 600px) {
   .volume-popup { right: 16px; }
 }
+.volume-popup { right: 22px; bottom: 78px; }
+@media (max-width: 600px) { .volume-popup { right: 16px; } }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaLeaf, FaTimes } from "react-icons/fa";
-import "./Contact.css";
+import "../styling/Contact.css";
 
 const formspreeEndpoint = "https://formspree.io/f/xbgdqpaq";
 
