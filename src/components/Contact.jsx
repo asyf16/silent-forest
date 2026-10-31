@@ -47,7 +47,7 @@ function Contact() {
   };
 
   return (
-    <>
+    <div data-nosnippet>
       <div className={`contact-note${collapsed ? " contact-note-collapsed" : ""}`}>
         <button
         type="button"
@@ -135,7 +135,7 @@ function Contact() {
           </p>
         </form>
       </dialog>
-    </>
+    </div>
   );
 }
 
