@@ -113,11 +113,12 @@ function AnimationScreen({ markSeen }) {
       }
     } else if (catInput.value) {
       const animals = [
-        { input: bearInput, id: "misterBear", sound: "./bear.mp3" },
-        { input: owlInput, id: "madameOwl", sound: "./owl.mp3" },
-        { input: bunnyInput, id: "bunny", sound: "./boing.mp3" },
+        // Rarity ranges from 0 to 1; lower means fewer appearances, 0 disables them.
+        { input: bearInput, id: "misterBear", sound: "./bear.mp3", rarity: 0.6 },
+        { input: owlInput, id: "madameOwl", sound: "./owl.mp3", rarity: 0.4 },
+        { input: bunnyInput, id: "bunny", sound: "./boing.mp3", rarity: 0.2 },
       ];
-      const available = animals.filter(({ input }) => !input.value);
+      const available = animals.filter(({ input, rarity }) => !input.value && rarity > 0);
 
       animals.forEach(({ input, id }) => {
         if (input.value && quietTime >= leaveTimes.current[id]) {
@@ -128,7 +129,12 @@ function AnimationScreen({ markSeen }) {
 
       if (nextArrival.current !== null && quietTime >= nextArrival.current) {
         if (available.length) {
-          const animal = available[Math.floor(Math.random() * available.length)];
+          const totalRarity = available.reduce((total, animal) => total + animal.rarity, 0);
+          let roll = Math.random() * totalRarity;
+          const animal = available.find(({ rarity }) => {
+            roll -= rarity;
+            return roll < 0;
+          });
           animal.input.value = true;
           leaveTimes.current[animal.id] = quietTime + (20 + Math.random() * 40) * 20;
           markSeen(animal.id);
