@@ -34,6 +34,7 @@ function AnimationScreen({ markSeen }) {
   const catInput = useStateMachineInput(rive, "State Machine 1", "catEnter");
   const bearInput = useStateMachineInput(rive, "State Machine 1", "bearEnter");
   const owlInput = useStateMachineInput(rive, "State Machine 1", "owlEnter");
+  const bunnyInput = useStateMachineInput(rive, "State Machine 1", "rabbitEnter");
   const volumeInput = useStateMachineInput(rive, "State Machine 1", "volume");
   const quietInput = useStateMachineInput(rive, "State Machine 1", "Quiet");
 
@@ -64,13 +65,15 @@ function AnimationScreen({ markSeen }) {
   };
 
   useEffect(() => {
-    if (rive) {
-      rive.on("statechange", (event) => {
-        if (event.data[0] == "MoonRise") {
-          started.current = true;
-        }
-      });
-    }
+    if (!rive) return;
+    const handleStateChange = (event) => {
+      if (event.data[0] === "MoonRise") started.current = true;
+    };
+    rive.on("statechange", handleStateChange);
+    return () => rive.off("statechange", handleStateChange);
+  }, [rive]);
+
+  useEffect(() => {
     if (micDecibels)
       volumeInput.value = ((micDecibels / sliderValue) * 100).toFixed(0);
     if (((micDecibels / sliderValue) * 100).toFixed(0) >= 99) {
@@ -86,6 +89,9 @@ function AnimationScreen({ markSeen }) {
       }
       if (owlInput.value == true) {
         owlInput.value = false;
+      }
+      if (bunnyInput.value == true) {
+        bunnyInput.value = false;
       }
       if (soundOn) {
         playEffect("./shh.mp3");
@@ -110,8 +116,11 @@ function AnimationScreen({ markSeen }) {
       if (soundOn) {
         playEffect("./owl.mp3");
       }
+    } else if (quietTime > 2500 && !bunnyInput.value) {
+      bunnyInput.value = true;
+      markSeen("bunny");
     }
-  }, [micDecibels, sliderValue, rive, markSeen]);
+  }, [micDecibels, sliderValue, quietTime, rive, volumeInput, quietInput, catInput, bearInput, owlInput, bunnyInput, soundOn, markSeen]);
 
   return (
     <div className="Wrapper">
