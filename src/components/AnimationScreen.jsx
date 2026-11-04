@@ -19,6 +19,8 @@ function AnimationScreen({ markSeen }) {
   const [sliderValue, setSliderValue] = useState(125);
   const [soundOn, setSoundOn] = useState(false);
   const effectAudio = useRef(null);
+  const nextArrival = useRef(null);
+  const leaveTimes = useRef({});
   let started = useRef(false);
 
   const { rive, RiveComponent } = useRive({
@@ -74,10 +76,13 @@ function AnimationScreen({ markSeen }) {
   }, [rive]);
 
   useEffect(() => {
+    if (!rive || !volumeInput || !quietInput || !catInput || !bearInput || !owlInput || !bunnyInput) return;
     if (micDecibels)
       volumeInput.value = ((micDecibels / sliderValue) * 100).toFixed(0);
     if (((micDecibels / sliderValue) * 100).toFixed(0) >= 99) {
       setQuietTime(0);
+      nextArrival.current = null;
+      leaveTimes.current = {};
       quietInput.value = true;
       setTimeout(() => (quietInput.value = false), 2500);
       if (catInput.value == true) {
@@ -96,31 +101,42 @@ function AnimationScreen({ markSeen }) {
       if (soundOn) {
         playEffect("./shh.mp3");
       }
-    } else if (quietTime > 250 && !catInput.value) {
+    } else if (quietTime >= 250 && !catInput.value) {
       catInput.value = true;
+      // The microphone updates every 50 ms: 20 updates per second.
+      nextArrival.current = quietTime + (10 + Math.random() * 20) * 20;
       markSeen("littleKitty");
       rive.setBooleanStateAtPath("Walk", true, "Cat");
       setTimeout(() => rive.setBooleanStateAtPath("Walk", false, "Cat"), 4000);
       if (soundOn) {
         playEffect("./cat.mp3");
       }
-    } else if (quietTime > 800 && !bearInput.value) {
-      bearInput.value = true;
-      markSeen("misterBear");
-      if (soundOn) {
-        playEffect("./bear.mp3");
-      }
-    } else if (quietTime > 2000 && !owlInput.value) {
-      owlInput.value = true;
-      markSeen("madameOwl");
-      if (soundOn) {
-        playEffect("./owl.mp3");
-      }
-    } else if (quietTime > 100 && !bunnyInput.value) {
-      bunnyInput.value = true;
-      markSeen("bunny");
-      if (soundOn) {
-        playEffect("./boing.mp3");
+    } else if (catInput.value) {
+      const animals = [
+        { input: bearInput, id: "misterBear", sound: "./bear.mp3" },
+        { input: owlInput, id: "madameOwl", sound: "./owl.mp3" },
+        { input: bunnyInput, id: "bunny", sound: "./boing.mp3" },
+      ];
+      const available = animals.filter(({ input }) => !input.value);
+
+      animals.forEach(({ input, id }) => {
+        if (input.value && quietTime >= leaveTimes.current[id]) {
+          input.value = false;
+          delete leaveTimes.current[id];
+        }
+      });
+
+      if (nextArrival.current !== null && quietTime >= nextArrival.current) {
+        if (available.length) {
+          const animal = available[Math.floor(Math.random() * available.length)];
+          animal.input.value = true;
+          leaveTimes.current[animal.id] = quietTime + (20 + Math.random() * 40) * 20;
+          markSeen(animal.id);
+          if (soundOn) {
+            playEffect(animal.sound);
+          }
+        }
+        nextArrival.current = quietTime + (10 + Math.random() * 20) * 20;
       }
     }
   }, [micDecibels, sliderValue, quietTime, rive, volumeInput, quietInput, catInput, bearInput, owlInput, bunnyInput, soundOn, markSeen]);
