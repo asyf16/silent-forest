@@ -116,9 +116,12 @@ function AnimationScreen({ markSeen }) {
       if (soundOn) {
         playEffect("./owl.mp3");
       }
-    } else if (quietTime > 2500 && !bunnyInput.value) {
+    } else if (quietTime > 100 && !bunnyInput.value) {
       bunnyInput.value = true;
       markSeen("bunny");
+      if (soundOn) {
+        playEffect("./boing.mp3");
+      }
     }
   }, [micDecibels, sliderValue, quietTime, rive, volumeInput, quietInput, catInput, bearInput, owlInput, bunnyInput, soundOn, markSeen]);
 
