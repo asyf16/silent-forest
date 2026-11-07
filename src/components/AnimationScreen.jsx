@@ -19,8 +19,10 @@ function AnimationScreen({ markSeen }) {
   const [sliderValue, setSliderValue] = useState(125);
   const [soundOn, setSoundOn] = useState(false);
   const effectAudio = useRef(null);
+  const sparkleTimeout = useRef(null);
   const nextArrival = useRef(null);
   const leaveTimes = useRef({});
+  const lastUnicornArrival = useRef(0);
   let started = useRef(false);
 
   const { rive, RiveComponent } = useRive({
@@ -41,12 +43,16 @@ function AnimationScreen({ markSeen }) {
   const quietInput = useStateMachineInput(rive, "State Machine 1", "Quiet");
 
   useEffect(() => {
+    if (!soundOn) clearTimeout(sparkleTimeout.current);
     if (effectAudio.current) {
       if (!soundOn) effectAudio.current.pause();
     }
   }, [soundOn]);
 
-  useEffect(() => () => effectAudio.current?.pause(), []);
+  useEffect(() => () => {
+    clearTimeout(sparkleTimeout.current);
+    effectAudio.current?.pause();
+  }, []);
 
   const playEffect = (source) => {
     effectAudio.current?.pause();
@@ -79,8 +85,23 @@ function AnimationScreen({ markSeen }) {
     if (!rive || !volumeInput || !quietInput || !catInput || !bearInput || !owlInput || !bunnyInput) return;
     if (micDecibels)
       volumeInput.value = ((micDecibels / sliderValue) * 100).toFixed(0);
-    if (((micDecibels / sliderValue) * 100).toFixed(0) >= 99) {
+    const isLoud = ((micDecibels / sliderValue) * 100).toFixed(0) >= 99;
+    // 15 minutes of silence at 20 microphone updates per second.
+    if (!isLoud && quietTime - lastUnicornArrival.current >= 15 * 60 * 20) {
+      if (soundOn) {
+        playEffect("./harp.mp3");
+        clearTimeout(sparkleTimeout.current);
+        sparkleTimeout.current = setTimeout(() => playEffect("./sparkle.mp3"), 8600);
+      }
+      rive.stateMachineInputs("State Machine 1")
+        ?.find((input) => input.name === "unicornMagic")?.fire();
+      rive.fireStateAtPath("unicornMagic", "unicorn");
+      markSeen("majesticUnicorn");
+      lastUnicornArrival.current = quietTime;
+    }
+    if (isLoud) {
       setQuietTime(0);
+      lastUnicornArrival.current = 0;
       nextArrival.current = null;
       leaveTimes.current = {};
       quietInput.value = true;

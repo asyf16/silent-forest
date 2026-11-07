@@ -7,6 +7,7 @@ const animals = [
   { id: "misterBear", name: "Mister Bear", icon: "/images/bear-icon.png", note: "Mister Bear is a gentle soul who keeps the forest peaceful, one quiet moment at a time." },
   { id: "madameOwl", name: "Madame Owl", icon: "/images/owl-icon.png", note: "Wise and watchful, Madame Owl loves the quiet and has a soft spot for patient visitors." },
   { id: "bunny", name: "Shy Bunny", icon: "/images/bunny-icon.png", note: "First one ear peeks out, then the other. When the forest stays quiet, Shy Bunny hops a little closer." },
+  { id: "majesticUnicorn", name: "Majestic Unicorn", icon: "/images/unicorn-icon.png", note: "The most elusive of the forest creatures, Majestic Unicorn only appears for those who keep the forest very quiet." },
 ];
 
 export default function AnimalIndex({ index }) {
@@ -48,5 +49,6 @@ AnimalIndex.propTypes = {
     misterBear: PropTypes.string,
     madameOwl: PropTypes.string,
     bunny: PropTypes.string,
+    majesticUnicorn: PropTypes.string,
   }).isRequired,
 };

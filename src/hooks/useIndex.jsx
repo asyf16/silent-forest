@@ -6,12 +6,13 @@ export default function useIndex() {
       const saved = JSON.parse(localStorage.getItem("animalIndex")) || {};
       return {
         bunny: saved.bunny ?? null,
+        majesticUnicorn: saved.majesticUnicorn ?? null,
         littleKitty: saved.littleKitty ?? saved.cat ?? null,
         misterBear: saved.misterBear ?? saved.bear ?? null,
         madameOwl: saved.madameOwl ?? saved.owl ?? null,
       };
     } catch {
-      return { littleKitty: null, misterBear: null, madameOwl: null, bunny: null };
+      return { littleKitty: null, misterBear: null, madameOwl: null, bunny: null, majesticUnicorn: null };
     }
   });
 
